@@ -538,3 +538,112 @@ db.restaurants.find(
   { "grades.score": { $not: { $lte: 5 } } },
   { borough: { $in: ["Manhattan", "Brooklyn"] } }
 );
+
+// 51. Write a MongoDB query to find the average score for each restaurant.
+
+db.restaurants.aggregate([
+  {
+    $unwind: "$grades",
+  },
+  { $group: { _id: "$name", avgScore: { $avg: "$grades.score" } } },
+]);
+
+// 52. Write a MongoDB query to find the highest score for each restaurant.
+
+db.restaurants.aggregate([
+  {
+    $unwind: "$grades",
+  },
+  { $group: { _id: "$name", avgScore: { $max: "$grades.score" } } },
+]);
+
+// 53. Write a MongoDB query to find the lowest score for each restaurant.
+
+db.restaurants.aggregate([
+  {
+    $unwind: "$grades",
+  },
+  { $group: { _id: "$name", avgScore: { $min: "$grades.score" } } },
+]);
+
+// 54. Write a MongoDB query to find the count of restaurants in each borough.
+
+db.restaurants.aggregate([
+  {
+    $group: { _id: "$borough", count: { $sum: 1 } },
+  },
+]);
+
+// 55. Write a MongoDB query to find the count of restaurants for each cuisine.
+
+db.restaurants.aggregate([
+  {
+    $group: { _id: "$cuisine", count: { $sum: 1 } },
+  },
+]);
+
+// 56. Write a MongoDB query to find the count of restaurants for each cuisine and borough.
+
+db.restaurants.aggregate([
+  {
+    $group: {
+      _id: { cuisine: "$cuisine", borough: "$borough" },
+      count: { $sum: 1 },
+    },
+  },
+]);
+
+// 57. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each cuisine.
+
+db.restaurants.aggregate([
+  {
+    $unwind: "$grades",
+  },
+  {
+    $match: { "grades.grade": "A" },
+  },
+  {
+    $group: {
+      _id: "$cuisine",
+      count: { $sum: 1 },
+    },
+  },
+]);
+
+// 58. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each borough.
+
+db.restaurants.aggregate([
+  {
+    $unwind: "$grades",
+  },
+  {
+    $match: { "grades.grade": "A" },
+  },
+  {
+    $group: {
+      _id: "$borough",
+      count: { $sum: 1 },
+    },
+  },
+]);
+
+// 59. Write a MongoDB query to find the count of restaurants that received a grade of 'A' for each cuisine and borough.
+
+db.restaurants.aggregate([
+  {
+    $unwind: "$grades",
+  },
+  {
+    $match: { "grades.grade": "A" },
+  },
+  {
+    $group: {
+      _id: { cuisine: "$cuisine", borough: "$borough" },
+      count: { $sum: 1 },
+    },
+  },
+]);
+
+// 60. Write a MongoDB query to find the number of restaurants that have been graded in each month of the year.
+
+// 61. Write a MongoDB query to find the average score for each cuisine.
