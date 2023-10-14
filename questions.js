@@ -554,7 +554,7 @@ db.restaurants.aggregate([
   {
     $unwind: "$grades",
   },
-  { $group: { _id: "$name", avgScore: { $max: "$grades.score" } } },
+  { $group: { _id: "$name", maxScore: { $max: "$grades.score" } } },
 ]);
 
 // 53. Write a MongoDB query to find the lowest score for each restaurant.
@@ -563,7 +563,7 @@ db.restaurants.aggregate([
   {
     $unwind: "$grades",
   },
-  { $group: { _id: "$name", avgScore: { $min: "$grades.score" } } },
+  { $group: { _id: "$name", minScore: { $min: "$grades.score" } } },
 ]);
 
 // 54. Write a MongoDB query to find the count of restaurants in each borough.
