@@ -19,7 +19,6 @@ const dbname = process.env.DB_NAME;
 const dbuser = process.env.DB_USER;
 const dbpwd = process.env.DB_PWD;
 const connectionString = `mongodb://${dbuser}:${dbpwd}@${dbhost}:${dbport}/${dbname}`;
-// console.log(connectionString);
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
